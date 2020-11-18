@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vertretungsplan_mobile/tab_container_bottom.dart';
+import 'file:///B:/vertretungsplan_mobile/lib/WMP_Channel/tab_container_bottom.dart';
+import 'package:vertretungsplan_mobile/side_bar_navigation.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blueGrey,
       ),
-      home: TabContainerBottom(),
+      home: AppDrawer(),
     );
   }
 }
