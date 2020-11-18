@@ -9,8 +9,12 @@ export function exists(uniqueid) {
 }
 
 export function register (uniqueid) {
+    parsedContent[uniqueid] = {}
     parsedContent[uniqueid].count = 1
+
+    vote.parsedVoteContent[uniqueid] = {}
     vote.parsedVoteContent[uniqueid].votes = []
+
     fs.writeFileSync('vote.json', JSON.stringify(vote.parsedVoteContent))
     fs.writeFileSync('user.json', JSON.stringify(parsedContent))
 }

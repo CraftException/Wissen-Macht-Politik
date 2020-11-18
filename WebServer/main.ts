@@ -1,3 +1,20 @@
+console.log("------------------------------------------------------------" +
+            "\n" +
+    " __          ____  __ _____    __          ________ ____  \n" +
+    " \\ \\        / /  \\/  |  __ \\   \\ \\        / /  ____|  _ \\ \n" +
+    "  \\ \\  /\\  / /| \\  / | |__) |   \\ \\  /\\  / /| |__  | |_) |\n" +
+    "   \\ \\/  \\/ / | |\\/| |  ___/     \\ \\/  \\/ / |  __| |  _ < \n" +
+    "    \\  /\\  /  | |  | | |          \\  /\\  /  | |____| |_) |\n" +
+    "     \\/  \\/   |_|  |_|_|           \\/  \\/   |______|____/ \n" +
+    "                                                          \n" +
+    "                                                          \n" +
+    "Version: " + process.version + "\n" +
+    "Developer: CraftException\n" +
+            "------------------------------------------------------------"
+            )
+
+console.log("Initializing Services!")
+
 import * as http from "http"
 
 import * as url from "url"
@@ -14,7 +31,7 @@ http.createServer(function (req, res) {
 
     var query = url.parse(req.url, true).query
 
-    if (req.url.startsWith("/registerifnotexistss")) {
+    if (req.url.startsWith("/registerifnotexists")) {
 
         if (query["uniqueid"] === undefined) {
             res.end("-1")
@@ -31,12 +48,32 @@ http.createServer(function (req, res) {
             return
         }
 
-        res.end(fileman.getPlayerPoints(query["uniqueid"]))
+        res.end(fileman.getPlayerPoints(query["uniqueid"]).toString())
 
-    } else if (req.url.startsWith("/registervideoselect")) {
+    } else if (req.url.startsWith("/registervote")) {
+        if (query["secrettoken"] === undefined || secrettoken != query["secrettoken"]) {
+            res.end("-1")
+            return
+        }
 
-    } else if (req.url.startsWith("/getvideoselect")) {
+        var xVote = new vote.Vote()
 
+        xVote.header = query["header"].toString()
+        xVote.desc = query["desc"].toString()
+
+        if (query["type"] === "1") {
+            xVote.type = vote.Type.CHOICE
+        } else {
+            xVote.type = vote.Type.SELECT
+            xVote.choices = JSON.parse(query["choices"].toString())
+        }
+
+        xVote.img = query["img"].toString()
+
+        vote.createVote(xVote)
+        res.end("1")
+    } else if (req.url.startsWith("/getvote")) {
+        res.end(JSON.stringify(vote.parsedVoteContent.votes))
     } else if (req.url.startsWith("/registercode")) {
         if (query["secrettoken"] === undefined) {
             res.end("-1")
@@ -57,25 +94,29 @@ http.createServer(function (req, res) {
         }
 
         fileman.setPoints(query["uniqueid"], fileman.getPoints(query["code"]))
-        res.end(fileman.getPoints(query["code"]))
+        res.end("1")
         fileman.removeToken(query["code"])
 
     } else if (req.url.startsWith("/addinfo")) {
-        if (query["secrettoken"] === undefined) {
+        if (query["secrettoken"] === undefined || secrettoken != query["secrettoken"]) {
             res.end("-1")
             return
         }
 
-        var info = new info.Info()
+        var xInfo = new info.Info()
 
-        info.header = query["header"]
-        info.desc = query["desc"]
-        info.img = query["img"]
+        xInfo.header = query["header"].toString()
+        xInfo.desc = query["desc"].toString()
+        xInfo.img = query["img"].toString()
 
-        info.addInfo(info)
+        info.addInfo(xInfo)
         res.end("1")
-    } else if (req.url.startsWith("/getvideoselect")) {
-        res.end(info.getInfo())
+    } else if (req.url.startsWith("/getinfo")) {
+        res.end(JSON.stringify(info.getInfo()))
+    } else {
+        res.end("Unknown Request")
     }
 
-}).listen(8080);
+}).listen(8081);
+
+console.log("HTTP-Server started! Listening to all Requests on Port 8081")

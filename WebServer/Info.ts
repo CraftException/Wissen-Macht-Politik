@@ -1,6 +1,6 @@
 import * as fileMan from "./Token"
 
-class Info {
+export class Info {
 
     header:string
     desc:string
