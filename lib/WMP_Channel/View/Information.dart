@@ -14,8 +14,8 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
   void initState() {
     super.initState();
 
-    InfoRequestHandler.getInfos("wmp.craftexception.de:8081").then((value) => setState(() => {
-      value = information
+    InfoRequestHandler.getInfos("http://45.93.249.196:8081/").then((value) => setState(() {
+      information = value;
     }));
   }
 
@@ -23,9 +23,7 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
   Widget build(BuildContext context) {
     List<Widget> informationWidget = [];
 
-    if (information == null)
-      information = [];
-
+    informationWidget.add(_header());
     information.forEach((value) {
       informationWidget.add(_getInformationWidget(value.header, value.description, value.image));
     });
@@ -33,9 +31,12 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
     return Scaffold(
 
       body: Center(
-        child: Column(
-          children: informationWidget,
-        ),
+        child:
+            SingleChildScrollView(
+              child: Column(
+                children: informationWidget,
+              ),
+            )
       ),
     );
   }
@@ -44,8 +45,10 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
   bool get wantKeepAlive => true;
 
   Widget _getInformationWidget (String text, String description, String image) {
+
     return Container(
-      margin: EdgeInsets.only(left: 30, top: 100, right: 30, bottom: 50),
+      margin: EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 10),
+      width: MediaQuery.of(context).size.width * 0.9,
       padding: EdgeInsets.all(30),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -66,11 +69,60 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
       ),
       child: Column(
         children: [
-          Text(text, style: TextStyle(fontSize: 22, height: 1.5),),
-          Image.network(image, alignment: Alignment.center, height: 1.6),
-          Text(description, style: TextStyle(fontSize: 19, height: 1.4),),
+          Text(text, style: TextStyle(fontSize: 28, height: 1.5),),
+          Image.network(image, alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.width * 0.4,),
+          Text(description, style: TextStyle(fontSize: 18, height: 1.4),),
         ],
       ),
+    );
+  }
+
+  Widget _header () {
+    return Container(
+      padding: EdgeInsets.all(11),
+      decoration: BoxDecoration(
+
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+
+
+        ],
+      ),
+      child: Center(
+        child: Row(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
+              ),
+              child: Image.network("https://pbs.twimg.com/profile_images/1252349508609966080/h0-6ZFd1.jpg", alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.width * 0.2),
+            ),
+            Container(
+              margin: EdgeInsets.only(left: 25),
+              child:
+              Column(
+                children: [
+                  Text("Informationen", style: TextStyle(fontSize: 23, height: 1.5), textAlign: TextAlign.center),
+                  Text("Alles neue über den YT Kanal", style: TextStyle(fontSize: 14, height: 1.05), textAlign: TextAlign.center)
+                ],
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 }

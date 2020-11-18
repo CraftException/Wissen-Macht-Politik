@@ -6,11 +6,11 @@ class InfoRequestHandler {
   static Future<List<Info>> getInfos (String requesturl) async {
 
     List<Info> info = [];
-    final response = await http.get(requesturl + "/getinfo");
+    final response = await http.get(requesturl + "getinfo");
 
     if (response.statusCode == 200 && response.body.startsWith("[")) {
       jsonDecode(response.body).forEach((e) => {
-        info.add(Info.fromJson(jsonDecode(e)))
+        info.add(Info.fromJson(e))
       });
       return info;
     } else {
@@ -31,8 +31,8 @@ class Info {
   factory Info.fromJson(Map<String, dynamic> json) {
     return Info(
       header: json['header'],
-      description: json['description'],
-      image: json['image'],
+      description: json['desc'],
+      image: json['img'],
     );
   }
 
