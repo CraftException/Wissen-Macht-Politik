@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/requests/InfoRequests.dart';
 
@@ -28,6 +29,9 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
       informationWidget.add(_getInformationWidget(value.header, value.description, value.image));
     });
 
+    if (informationWidget.length == 1)
+      informationWidget.add(new CircularProgressIndicator());
+
     return Scaffold(
 
       body: Center(
@@ -45,7 +49,6 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
   bool get wantKeepAlive => true;
 
   Widget _getInformationWidget (String text, String description, String image) {
-
     return Container(
       margin: EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 10),
       width: MediaQuery.of(context).size.width * 0.9,

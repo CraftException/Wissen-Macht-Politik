@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:link/link.dart';
+import 'package:vertretungsplan_mobile/HelpingClass.dart';
+import 'package:vertretungsplan_mobile/TokenAlert/TokenAlert.dart';
+import 'package:vertretungsplan_mobile/WMP_Channel/requests/VoteRequests.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/tab_container_bottom.dart';
 
 import 'About/AboutContainer.dart';
@@ -13,18 +15,24 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawer extends State<AppDrawer> {
 
-  List<Widget> listScreens;
-  List<String> listStrings;
-
   Widget content;
 
   @override
   void initState() {
+
+    VoteRequests.init("http://45.93.249.196:8081/");
+    print("Registered at Webserver");
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    if (content == null) {
+      content = TabContainerBottom();
+    }
+
     return MaterialApp(
       color: Colors.blue,
       home: Scaffold(
@@ -33,14 +41,16 @@ class _AppDrawer extends State<AppDrawer> {
             title: Text("Wissen Macht Politik"),
             actions: <Widget>[
               // action button
-              Link(
-                child: Icon(Icons.info_outline),
-                url: "https://www.youtube.com/channel/UC3OSxVUrgZDF7223ZYjLqdQ",
+              IconButton(
+                icon: Icon(Icons.video_library),
+                onPressed: () {
+                  HelpingClass.launchURL("https://www.youtube.com/channel/UC3OSxVUrgZDF7223ZYjLqdQ");
+                },
               ),
               IconButton(
                 icon: Icon(Icons.monetization_on),
                 onPressed: () {
-
+                  TokenAlert.showTokenAlert(context);
                 },
               ),
             ]),
@@ -56,8 +66,13 @@ class _AppDrawer extends State<AppDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           _createHeader(),
+          _createDrawerItem(icon: Icons.home, text: 'Startseite', onTap: () => {
+            setState(() {
+              content = TabContainerBottom();
+            })
+          }),
+          Divider(),
           _createDrawerItem(icon: Icons.apps, text: 'Aktuelles', onTap: () => {
-
           }),
           _createDrawerItem(icon: Icons.flag, text: 'DE-News',),
           _createDrawerItem(icon: Icons.account_circle, text: 'Covid-19',),

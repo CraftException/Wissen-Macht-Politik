@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../WMP_Channel/View/Information.dart';
-import '../WMP_Channel/View/Videos.dart';
 import '../WMP_Channel/View/Videoselect.dart';
 
 class TabContainerBottom extends StatefulWidget {
@@ -20,12 +19,10 @@ class _TabContainerBottomState extends State<TabContainerBottom> {
     super.initState();
     listScreens = [
       Information(),
-      Videos(),
       Videoselect()
     ];
     listStrings = [
       "Infos",
-      "Videos",
       "Umfragen und Co."
     ];
   }
@@ -53,10 +50,6 @@ class _TabContainerBottomState extends State<TabContainerBottom> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.info_outline),
                 title: Text("Informationen"),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.videocam),
-                title: Text("Videos"),
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.face),
