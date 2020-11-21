@@ -21,13 +21,13 @@ export var parsedVoteContent = JSON.parse(fs.readFileSync("vote.json", "utf-8"))
 if (parsedVoteContent.votes === undefined)
     parsedVoteContent.votes = {}
 
-export function addVote (uniqueid, vote:Vote, choice:string) {
-    fileMan.parsedContent[uniqueid].vote[vote.header] = choice
+export function addVote (uniqueid, vote, choice) {
+    fileMan.parsedContent[uniqueid].vote[vote] = choice
     fs.writeFileSync('user.json', JSON.stringify(fileMan.parsedContent))
 }
 
-export function hasVoted (uniqueid, voteheader) {
-    return fileMan.parsedContent[uniqueid].vote[voteheader.header]
+export function hasVoted(uniqueid, voteheader) {
+    return fileMan.parsedContent[uniqueid].vote[voteheader] !== undefined
 }
 
 export function createVote (vote:Vote) {

@@ -38,7 +38,9 @@ http.createServer(function (req, res) {
             return
         }
 
-        fileman.register(query["uniqueid"])
+        if (!fileman.exists(query["uniqueid"])) {
+            fileman.register(query["uniqueid"])
+        }
         res.end("0")
 
     } else if (req.url.startsWith("/getpoints")) {
@@ -72,7 +74,22 @@ http.createServer(function (req, res) {
 
         vote.createVote(xVote)
         res.end("1")
-    } else if (req.url.startsWith("/getvote")) {
+    } else if (req.url.startsWith("/hasvoted")) {
+        if (query["uniqueid"] === undefined || query["voteheader"] === undefined) {
+            res.end("-1")
+            return
+        }
+
+        res.end(vote.hasVoted(query["uniqueid"], query["voteheader"]))
+    } else if (req.url.startsWith("/vote")) {
+        if (query["uniqueid"] === undefined || query["voteheader"] === undefined) {
+            res.end("-1")
+            return
+        }
+
+        vote.addVote(query["uniqueid"], query["voteheader"], query["choice"]);
+        res.end(0)
+    } else if (req.url.startsWith("/getvotes")) {
         res.end(JSON.stringify(vote.parsedVoteContent.votes))
     } else if (req.url.startsWith("/registercode")) {
         if (query["secrettoken"] === undefined) {
