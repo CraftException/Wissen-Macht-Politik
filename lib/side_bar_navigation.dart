@@ -42,17 +42,12 @@ class _AppDrawer extends State<AppDrawer> {
             actions: <Widget>[
               // action button
               IconButton(
-                icon: Icon(Icons.video_library),
-                onPressed: () {
-                  HelpingClass.launchURL("https://www.youtube.com/channel/UC3OSxVUrgZDF7223ZYjLqdQ");
-                },
-              ),
-              IconButton(
                 icon: Icon(Icons.monetization_on),
                 onPressed: () {
                   TokenAlert.showTokenAlert(context);
                 },
               ),
+              _createThreeDotMenu()
             ]),
           drawer: _createDrawer(context),
       ),
@@ -99,6 +94,35 @@ class _AppDrawer extends State<AppDrawer> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _createThreeDotMenu () {
+    return PopupMenuButton<String>(
+        onSelected: (String choice) {
+          switch (choice) {
+            case 'YouTube':
+              HelpingClass.launchURL("https://www.youtube.com/channel/UC3OSxVUrgZDF7223ZYjLqdQ");
+              break;
+            case 'Discord':
+              HelpingClass.launchURL("https://discord.gg/SMMp28H");
+              break;
+            case 'Twitter':
+              HelpingClass.launchURL("https://twitter.com/WissenPolitik");
+              break;
+            case 'Patreon':
+              HelpingClass.launchURL("https://www.patreon.com/wissenmachtpolitik");
+              break;
+          }
+        },
+        itemBuilder: (BuildContext context) {
+      return {'YouTube', 'Discord', 'Twitter', 'Patreon'}.map((String choice) {
+        return PopupMenuItem<String>(
+          value: choice,
+          child: Text(choice),
+        );
+      }).toList();
+    }
     );
   }
 
