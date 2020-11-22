@@ -28,7 +28,7 @@ class _Tab1State extends State<Videoselect> with AutomaticKeepAliveClientMixin<V
 
     voteWidget.add(_header());
     votes.forEach((element) {
-      voteWidget.add(_getVoteWidget(element));
+      voteWidget.insert(1, _getVoteWidget(element));
     });
 
     if (voteWidget.length == 1)
@@ -125,7 +125,7 @@ class _Tab1State extends State<Videoselect> with AutomaticKeepAliveClientMixin<V
                     ),
                   ],
                 ),
-                child: Image.network("https://pbs.twimg.com/profile_images/1252349508609966080/h0-6ZFd1.jpg", alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.width * 0.2),
+                child: Image.network("https://i.imgur.com/yJt6Smz.png", alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.width * 0.2),
               ),
               Container(
                 margin: EdgeInsets.only(left: 25),

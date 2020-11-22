@@ -22,6 +22,7 @@ import * as url from "url"
 import * as fileman from "./Token"
 import * as vote from "./Vote"
 import * as info from "./Info"
+import * as blog from "./blog"
 
 //The Secret Token for accessing Token Managing
 const secrettoken = "toor"
@@ -132,6 +133,39 @@ http.createServer(function (req, res) {
         res.end("1")
     } else if (req.url.startsWith("/getinfo")) {
         res.end(JSON.stringify(info.getInfo()))
+    } else if (req.url.startsWith("/getposts")) {
+        if (query["group"] === undefined) {
+            res.end("-1")
+            return
+        }
+
+        res.end(blog.getPosts(query["group"]).toString())
+
+    } else if (req.url.startsWith("/addpost")) {
+        if (query["secrettoken"] === undefined || secrettoken != query["secrettoken"]) {
+            res.end("-1")
+            return
+        }
+
+        var xPost = new blog.Post()
+
+        xPost.header = query["header"].toString()
+        xPost.content = query["desc"].toString()
+        xPost.image = query["img"].toString()
+
+        xPost.author = query["author"].toString()
+        xPost.date = query["date"].toString()
+
+        blog.addBlogPost(query["group"], xPost)
+        res.end("1")
+    } else if (req.url.startsWith("/delpost")) {
+        if (query["secrettoken"] === undefined || secrettoken != query["secrettoken"]) {
+            res.end("-1")
+            return
+        }
+
+        blog.deleteBlogPost(query["group"], query["header"].toString())
+        res.end("1")
     } else {
         res.end("Unknown Request")
     }
