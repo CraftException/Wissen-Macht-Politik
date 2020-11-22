@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vertretungsplan_mobile/TokenAlert/TokenAlert.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/View/VoteAlert/VoteAlert.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/requests/VoteRequests.dart';
 
