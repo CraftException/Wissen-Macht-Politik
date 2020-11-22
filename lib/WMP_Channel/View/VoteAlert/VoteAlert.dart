@@ -64,8 +64,52 @@ class VoteAlert {
         ).show();
       } else {
 
+        int choice = -1;
+        List<dynamic> choices = vote.choices;
+
+        List<Widget> choiceButtons = [];
+        choices.forEach((element) {
+          choiceButtons.add(_choiceButton(element, vote));
+        });
+
+        Alert(
+            context: AppDrawer.scaffoldKey.currentContext,
+            title: "Voten",
+            content: Column(
+              children: [
+                Text(
+                  "Gebe jetzt deine Stimme für \"" + vote.header +
+                      "\" ab! Was gefällt dir?",
+                  textAlign: TextAlign.center,
+                ),
+                Column(
+                  children: choiceButtons,
+                )
+              ],
+            ),
+            buttons: []
+        ).show();
       }
     }
+  }
+
+  static Widget _choiceButton (String choice, Vote vote) {
+    return DialogButton(
+      onPressed: () async {
+        VoteRequestHandler.vote("http://45.93.249.196:8081/", vote.header, choice);
+
+        final int points = await VoteRequestHandler.getPoints("http://45.93.249.196:8081/");
+        Alert(context: AppDrawer.scaffoldKey.currentContext,
+            title: "Vielen Dank für deine Stimme!",
+            desc: "Deine Stimme zählt " + points.toString() + "-fach!",
+            buttons: []
+        ).show();
+      },
+      child: Text(
+        choice,
+        style: TextStyle(color: Colors.white, fontSize: 20),
+      ),
+    );
   }
 
 }

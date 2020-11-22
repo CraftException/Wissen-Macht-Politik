@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
-import 'package:vertretungsplan_mobile/HelpingClass.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/requests/VoteRequests.dart';
 
 class TokenAlert {
@@ -38,7 +37,6 @@ class TokenAlert {
         buttons: [
           DialogButton(
             onPressed: () async {
-              final deviceUUID = await HelpingClass.getDeviceUUID();
               if (myControler.text != "") {
                 if (await VoteRequestHandler.useCode("http://45.93.249.196:8081/",
                     int.parse(myControler.text))) {

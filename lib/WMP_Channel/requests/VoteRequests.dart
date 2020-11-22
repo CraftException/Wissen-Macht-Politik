@@ -61,7 +61,6 @@ class VoteRequestHandler {
     final response = await http.get(requesturl + "vote?uniqueid=" + deviceuuid + "&voteheader=" + headline.toString() + "&choice=" + choice.toString());
 
     if (response.body.startsWith("0")) {
-      print(response.body);
       return true;
     } else {
       return false;
@@ -72,17 +71,13 @@ class VoteRequestHandler {
     final deviceuuid = await HelpingClass.getDeviceUUID();
     final response = await http.get(requesturl + "hasvoted?uniqueid=" + deviceuuid + "&voteheader=" + headline.toString());
 
-    print("TRGGERW");
     if (response.statusCode == 200 && !(response.body == "-1")) {
       if (response.body.toLowerCase().startsWith("true")) {
-        print("TRUE 1");
         return true;
       } else {
-        print("FALSE 1");
         return false;
       }
     } else {
-      print("FALSE 2");
       return false;
     }
   }
@@ -96,14 +91,16 @@ class Vote {
   String description;
   String image;
 
-  List<String> choices;
+  List<dynamic> choices;
 
   Vote({this.type, this.header, this.description, this.image, this.choices});
 
   factory Vote.fromJson(Map<String, dynamic> json) {
     Type type = Type.CHOICE;
-    if (json['type'] == 1) {
+    List<dynamic> choices = [];
+    if (json['type'] == 0) {
       type = Type.CHOICE;
+      choices = json['choices'];
     } else {
       type = Type.SELECT;
     }
@@ -113,7 +110,7 @@ class Vote {
       header: json['header'],
       type: type,
       image: json['img'],
-      choices: json['choices'],
+      choices: choices,
     );
   }
 
