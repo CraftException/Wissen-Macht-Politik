@@ -13,7 +13,7 @@ export function register (uniqueid) {
     parsedContent[uniqueid].count = 1
 
     vote.parsedVoteContent[uniqueid] = {}
-    vote.parsedVoteContent[uniqueid].votes = []
+    console.log('Registered')
 
     fs.writeFileSync('vote.json', JSON.stringify(vote.parsedVoteContent))
     fs.writeFileSync('user.json', JSON.stringify(parsedContent))

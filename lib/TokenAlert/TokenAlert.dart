@@ -9,7 +9,7 @@ class TokenAlert {
   static void showTokenAlert (BuildContext context) async {
 
     final myControler = TextEditingController();
-    final int points = await VoteRequests.getPoints("http://45.93.249.196:8081/");
+    final int points = await VoteRequestHandler.getPoints("http://45.93.249.196:8081/");
 
     Alert(
       context: context,
@@ -40,7 +40,7 @@ class TokenAlert {
             onPressed: () async {
               final deviceUUID = await HelpingClass.getDeviceUUID();
               if (myControler.text != "") {
-                if (await VoteRequests.useCode("http://45.93.249.196:8081/",
+                if (await VoteRequestHandler.useCode("http://45.93.249.196:8081/",
                     int.parse(myControler.text))) {
                   Alert(context: context,
                       title: "Vielen Dank!",

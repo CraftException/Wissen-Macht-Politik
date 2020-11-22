@@ -22,12 +22,12 @@ if (parsedVoteContent.votes === undefined)
     parsedVoteContent.votes = {}
 
 export function addVote (uniqueid, vote, choice) {
-    fileMan.parsedContent[uniqueid].vote[vote] = choice
-    fs.writeFileSync('user.json', JSON.stringify(fileMan.parsedContent))
+    parsedVoteContent[uniqueid][vote] = choice
+    fs.writeFileSync('vote.json', JSON.stringify(parsedVoteContent))
 }
 
 export function hasVoted(uniqueid, voteheader) {
-    return fileMan.parsedContent[uniqueid].vote[voteheader] !== undefined
+    return parsedVoteContent[uniqueid][voteheader] !== undefined
 }
 
 export function createVote (vote:Vote) {

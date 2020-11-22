@@ -64,9 +64,9 @@ http.createServer(function (req, res) {
         xVote.desc = query["desc"].toString()
 
         if (query["type"] === "1") {
-            xVote.type = vote.Type.CHOICE
-        } else {
             xVote.type = vote.Type.SELECT
+        } else {
+            xVote.type = vote.Type.CHOICE
             xVote.choices = JSON.parse(query["choices"].toString())
         }
 
@@ -80,7 +80,7 @@ http.createServer(function (req, res) {
             return
         }
 
-        res.end(vote.hasVoted(query["uniqueid"], query["voteheader"]))
+        res.end(vote.hasVoted(query["uniqueid"], query["voteheader"]) + "")
     } else if (req.url.startsWith("/vote")) {
         if (query["uniqueid"] === undefined || query["voteheader"] === undefined) {
             res.end("-1")
@@ -91,6 +91,8 @@ http.createServer(function (req, res) {
         res.end(0)
     } else if (req.url.startsWith("/getvotes")) {
         res.end(JSON.stringify(vote.parsedVoteContent.votes))
+    } else if (req.url.startsWith("/getvoter")) {
+        res.end(JSON.stringify(vote.parsedVoteContent.vote))
     } else if (req.url.startsWith("/registercode")) {
         if (query["secrettoken"] === undefined) {
             res.end("-1")

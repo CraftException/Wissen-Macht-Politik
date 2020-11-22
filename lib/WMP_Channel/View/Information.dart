@@ -33,7 +33,6 @@ class _Tab1State extends State<Information> with AutomaticKeepAliveClientMixin<I
       informationWidget.add(new CircularProgressIndicator());
 
     return Scaffold(
-
       body: Center(
         child:
             SingleChildScrollView(

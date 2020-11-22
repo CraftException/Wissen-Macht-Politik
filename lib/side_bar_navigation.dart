@@ -7,6 +7,8 @@ import 'package:vertretungsplan_mobile/WMP_Channel/tab_container_bottom.dart';
 import 'About/AboutContainer.dart';
 
 class AppDrawer extends StatefulWidget {
+  static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   AppDrawer({Key key}) : super(key: key);
 
   @override
@@ -20,7 +22,7 @@ class _AppDrawer extends State<AppDrawer> {
   @override
   void initState() {
 
-    VoteRequests.init("http://45.93.249.196:8081/");
+    VoteRequestHandler.init("http://45.93.249.196:8081/");
     print("Registered at Webserver");
 
     super.initState();
@@ -36,6 +38,7 @@ class _AppDrawer extends State<AppDrawer> {
     return MaterialApp(
       color: Colors.blue,
       home: Scaffold(
+        key: AppDrawer.scaffoldKey,
         body: content,
         appBar: AppBar(
             title: Text("Wissen Macht Politik"),
