@@ -18,7 +18,7 @@ if (parsedBlogContent.germany === undefined) {
 }
 
 export function getPosts (group) {
-    return parsedBlogContent[group]
+    return JSON.stringify(parsedBlogContent[group])
 }
 
 export function addBlogPost (group, post:Post) {

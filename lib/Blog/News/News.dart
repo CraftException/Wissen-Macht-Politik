@@ -60,6 +60,11 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
   bool get wantKeepAlive => true;
 
   Widget _getBlogPostWidget (BlogPosts blogPosts) {
+
+    String header = blogPosts.header.split(".,")[0];
+    String color = blogPosts.header.split(".,")[2];
+    String topic = blogPosts.header.split(".,")[1];
+
     return Container(
       margin: EdgeInsets.only(left: 0, top: 20, right: 0, bottom: 10),
       width: MediaQuery.of(context).size.width * 0.9,
@@ -83,7 +88,8 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
       ),
       child: Column(
         children: [
-          Text(blogPosts.header, style: TextStyle(fontSize: 28, height: 1.5),),
+          Text(header, style: TextStyle(fontSize: 28, height: 1.5),),
+          Text(topic, style: TextStyle(fontSize: 20,backgroundColor: Color.fromARGB(255, int.parse(color.split(";")[0]), int.parse(color.split(";")[1]), int.parse(color.split(";")[2])))),
           Image.network(blogPosts.image, alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.4, height: MediaQuery.of(context).size.width * 0.4,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -146,8 +152,8 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
                 child:
                 Column(
                   children: [
-                    Text("DE-News", style: TextStyle(fontSize: 23, height: 1.5), textAlign: TextAlign.center),
-                    Text("Was passiert so in Deutschland?", style: TextStyle(fontSize: 14, height: 1.05), textAlign: TextAlign.center),
+                    Text("News", style: TextStyle(fontSize: 23, height: 1.5), textAlign: TextAlign.center),
+                    Text("Hier siehst du aktuelle Politische Infos!", style: TextStyle(fontSize: 14, height: 1.05), textAlign: TextAlign.center),
                     Container(
                       margin: EdgeInsets.only(left: 25.0, top: 25.0, right: 25.0),
 

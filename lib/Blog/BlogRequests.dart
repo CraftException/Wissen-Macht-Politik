@@ -35,7 +35,7 @@ class BlogPosts {
   factory BlogPosts.fromJson(Map<String, dynamic> json) {
     return BlogPosts(
       header: json['header'],
-      description: json['description'],
+      description: json['content'],
       image: json['image'],
       author: json['author'],
       date: json['date'],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vertretungsplan_mobile/Blog/Germany/German_News.dart';
 import 'package:vertretungsplan_mobile/HelpingClass.dart';
 import 'package:vertretungsplan_mobile/TokenAlert/TokenAlert.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/requests/VoteRequests.dart';
@@ -72,7 +73,11 @@ class _AppDrawer extends State<AppDrawer> {
           Divider(),
           _createDrawerItem(icon: Icons.apps, text: 'Aktuelles', onTap: () => {
           }),
-          _createDrawerItem(icon: Icons.flag, text: 'DE-News',),
+          _createDrawerItem(icon: Icons.flag, text: 'DE-News', onTap: () => {
+            setState(() {
+              content = GermanNews();
+            })
+          }),
           _createDrawerItem(icon: Icons.account_circle, text: 'Covid-19',),
           Divider(),
           _createDrawerItem(icon: Icons.note, text: 'WMP Kanal', onTap: () => {

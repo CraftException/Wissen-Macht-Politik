@@ -96,14 +96,22 @@ class VoteAlert {
   static Widget _choiceButton (String choice, Vote vote) {
     return DialogButton(
       onPressed: () async {
-        VoteRequestHandler.vote("http://45.93.249.196:8081/", vote.header, choice);
+         if (!(await VoteRequestHandler.hasVoted("http://45.93.249.196:8081/", vote.header))) {
+          VoteRequestHandler.vote("http://45.93.249.196:8081/", vote.header, choice);
 
-        final int points = await VoteRequestHandler.getPoints("http://45.93.249.196:8081/");
-        Alert(context: AppDrawer.scaffoldKey.currentContext,
-            title: "Vielen Dank für deine Stimme!",
-            desc: "Deine Stimme zählt " + points.toString() + "-fach!",
-            buttons: []
-        ).show();
+          final int points = await VoteRequestHandler.getPoints("http://45.93.249.196:8081/");
+          Alert(context: AppDrawer.scaffoldKey.currentContext,
+              title: "Vielen Dank für deine Stimme!",
+              desc: "Deine Stimme zählt " + points.toString() + "-fach!",
+              buttons: []
+          ).show();
+         } else {
+            Alert(context: AppDrawer.scaffoldKey.currentContext,
+              title: "Du hast bereits gevotet!",
+              desc: "Vielen Dank!",
+              buttons: []
+            ).show();           
+         }
       },
       child: Text(
         choice,
