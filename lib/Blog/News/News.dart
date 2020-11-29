@@ -4,29 +4,29 @@ import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:vertretungsplan_mobile/Blog/BlogRequests.dart';
 
-class GermanNews extends StatefulWidget {
+class News extends StatefulWidget {
   @override
-  _GermanNewsState createState() => _GermanNewsState();
+  _NewsState createState() => _NewsState();
 }
 
-class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMixin<GermanNews> {
+class _NewsState extends State<News> with AutomaticKeepAliveClientMixin<News> {
 
   String searchQuery;
   List<BlogPosts> posts = [];
+  bool loaded;
 
   @override
   void initState() {
     super.initState();
+    loaded = false;
 
-    if (searchQuery == "" || searchQuery == null) {
-      BlogRequestHandler.getPosts("http://45.93.249.196:8081/", "germany").then((value) =>
-        posts = value
-      );
-    } else {
-      BlogRequestHandler.getPosts("http://45.93.249.196:8081/", "germany").then((value) =>
-        posts = value.where((element) => element.header == (searchQuery))
-      );
-    }
+    BlogRequestHandler.getPosts("http://45.93.249.196:8081/", "news").then((value) =>
+      setState(() {
+        posts = value;
+        loaded = true;  
+      })
+    );
+
   }
 
   @override
@@ -40,7 +40,7 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
       postWidget.add(_getBlogPostWidget(value));
     });
 
-    if (postWidget.length == 2)
+    if (postWidget.length == 1 && !(loaded))
       postWidget.add(new CircularProgressIndicator());
 
     return Scaffold(
@@ -145,7 +145,7 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
                   ],
                 ),
 
-                child: Image.network("https://www.deutschland-lese.de/media_deutschland_lese/b_flagge_karte_deutschland.jpg", alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.width * 0.2),
+                child: Image.network("https://www.graphicsprings.com/filestorage/stencils/7b3e911c651a162c91af9f10a7cc16d3.png?width=500&height=500", alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.width * 0.2),
               ),
               Container(
                 margin: EdgeInsets.only(left: 25),

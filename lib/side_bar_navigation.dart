@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:vertretungsplan_mobile/About/AboutAlert.dart';
 import 'package:vertretungsplan_mobile/Blog/Germany/German_News.dart';
 import 'package:vertretungsplan_mobile/HelpingClass.dart';
 import 'package:vertretungsplan_mobile/TokenAlert/TokenAlert.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/requests/VoteRequests.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/tab_container_bottom.dart';
 
-import 'About/AboutContainer.dart';
+import 'Blog/Covid-19/Covid_News.dart';
+import 'Blog/News/News.dart';
 
 class AppDrawer extends StatefulWidget {
   static final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -72,13 +74,20 @@ class _AppDrawer extends State<AppDrawer> {
           }),
           Divider(),
           _createDrawerItem(icon: Icons.apps, text: 'Aktuelles', onTap: () => {
+              setState(() {
+                content = News();
+              })
           }),
           _createDrawerItem(icon: Icons.flag, text: 'DE-News', onTap: () => {
             setState(() {
               content = GermanNews();
             })
           }),
-          _createDrawerItem(icon: Icons.account_circle, text: 'Covid-19',),
+          _createDrawerItem(icon: Icons.account_circle, text: 'Covid-19', onTap: () => {
+            setState(() {
+              content = CovidNews();
+            })
+          }),
           Divider(),
           _createDrawerItem(icon: Icons.note, text: 'WMP Kanal', onTap: () => {
             setState(() {
@@ -90,9 +99,7 @@ class _AppDrawer extends State<AppDrawer> {
               icon: Icons.info_outline,
               text: 'Über diese App',
               onTap: () => {
-                setState(() {
-                  content = AboutContainer();
-                })
+                AboutAlert.showAboutAlert(context)
               }
           ),
           Divider(),

@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:readmore/readmore.dart';
 import 'package:vertretungsplan_mobile/Blog/BlogRequests.dart';
 
-class GermanNews extends StatefulWidget {
+import '../CovidRequests.dart';
+
+class CovidNews extends StatefulWidget {
   @override
-  _GermanNewsState createState() => _GermanNewsState();
+  _CovidNewsState createState() => _CovidNewsState();
 }
 
-class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMixin<GermanNews> {
+class _CovidNewsState extends State<CovidNews> with AutomaticKeepAliveClientMixin<CovidNews> {
 
-  String searchQuery;
   List<BlogPosts> posts = [];
   bool loaded;
 
@@ -20,12 +21,13 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
     super.initState();
     loaded = false;
 
-    BlogRequestHandler.getPosts("http://45.93.249.196:8081/", "germany").then((value) =>
-      setState(() {
-        posts = value;
-        loaded = true;
-      })
-    );
+      BlogRequestHandler.getPosts("http://45.93.249.196:8081/", "covid").then((value) =>
+        setState(() {
+          posts = value;
+          loaded = true;
+        })
+      );
+
   }
 
   @override
@@ -110,6 +112,20 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
   }
 
   Widget _header () {
+    CovidData dataGlobal = CovidData();
+    CovidRequestHandler.getGlobal().then((value) =>
+      setState(() => {
+        dataGlobal = value
+      })
+    );
+
+    CovidData dataDE = CovidData();
+    CovidRequestHandler.getGlobal().then((value) =>
+      setState(() => {
+        dataDE = value
+      })
+    );
+
     return Container(
         padding: EdgeInsets.all(11),
         decoration: BoxDecoration(
@@ -138,19 +154,16 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
                   ],
                 ),
 
-                child: Image.network("https://www.deutschland-lese.de/media_deutschland_lese/b_flagge_karte_deutschland.jpg", alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.width * 0.2),
+                child: Image.network("https://static.wixstatic.com/media/38def2_8584e289dd9a485880ec6b72cee1e8e4~mv2.png", alignment: Alignment.center, width: MediaQuery.of(context).size.width * 0.2, height: MediaQuery.of(context).size.width * 0.2),
               ),
               Container(
                 margin: EdgeInsets.only(left: 25),
                 child:
                 Column(
                   children: [
-                    Text("DE-News", style: TextStyle(fontSize: 23, height: 1.5), textAlign: TextAlign.center),
-                    Text("Was passiert so in Deutschland?", style: TextStyle(fontSize: 14, height: 1.05), textAlign: TextAlign.center),
-                    Container(
-                      margin: EdgeInsets.only(left: 25.0, top: 25.0, right: 25.0),
-
-                    ),
+                    Text("Covid-19", style: TextStyle(fontSize: 23, height: 1.5), textAlign: TextAlign.center),
+                    Text("Alles neue über die Pandemie", style: TextStyle(fontSize: 14, height: 1.05), textAlign: TextAlign.center),
+        
                   ],
                 ),
               )
@@ -161,3 +174,4 @@ class _GermanNewsState extends State<GermanNews> with AutomaticKeepAliveClientMi
   }
 
 }
+//Row: | | |; Column: - _ 
