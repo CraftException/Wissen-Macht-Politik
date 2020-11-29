@@ -53,4 +53,4 @@ app.*.map.json
 
 # Project exclude paths
 /WebServer/node_modules/
-
+/ControlPanel/node_modules/

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/services.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:youtube_api/youtube_api.dart';
 
 class HelpingClass {
 
@@ -41,6 +42,14 @@ class HelpingClass {
     }
 
     return identifier.toString();
+  }
+
+  static Future<String> getNewestVideo () async {
+    String key = 'AIzaSyD7Imrm7wi_mRLKSUgXsFko4aoPAjK-ZgI';
+    YoutubeAPI ytApi = new YoutubeAPI(key);
+    List<YT_API> ytResult = await ytApi.channel("UC3OSxVUrgZDF7223ZYjLqdQ");
+
+    return ytResult[0].id;
   }
 
 }

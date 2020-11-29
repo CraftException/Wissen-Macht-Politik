@@ -44,6 +44,13 @@ http.createServer(function (req, res) {
         }
         res.end("0")
 
+    } else if (req.url.startsWith("/exists")) {
+        if (query["uniqueid"] === undefined) {
+            res.end("-1")
+            return
+        }
+
+        res.end(fileman.exists(query["uniqueid"]))
     } else if (req.url.startsWith("/getpoints")) {
 
         if (query["uniqueid"] === undefined) {

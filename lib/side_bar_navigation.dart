@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vertretungsplan_mobile/About/AboutAlert.dart';
 import 'package:vertretungsplan_mobile/Blog/Germany/German_News.dart';
 import 'package:vertretungsplan_mobile/HelpingClass.dart';
+import 'package:vertretungsplan_mobile/Homepage/HomePage.dart';
 import 'package:vertretungsplan_mobile/TokenAlert/TokenAlert.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/requests/VoteRequests.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/tab_container_bottom.dart';
@@ -35,7 +36,7 @@ class _AppDrawer extends State<AppDrawer> {
   Widget build(BuildContext context) {
 
     if (content == null) {
-      content = TabContainerBottom();
+      content = HomePage();
     }
 
     return MaterialApp(
@@ -69,7 +70,7 @@ class _AppDrawer extends State<AppDrawer> {
           _createHeader(),
           _createDrawerItem(icon: Icons.home, text: 'Startseite', onTap: () => {
             setState(() {
-              content = TabContainerBottom();
+              content = HomePage();
             })
           }),
           Divider(),
