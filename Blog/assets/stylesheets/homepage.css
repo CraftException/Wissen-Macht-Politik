@@ -1,0 +1,27 @@
+.header {
+    background-color: #f1f1f1;
+    position: relative; 
+    padding: 40px 40px 30px;
+    border-bottom-left-radius: 30px; 
+    border-bottom-right-radius: 30px;
+    margin: 0;
+}
+
+.blogcontent {
+    margin: 15%;
+    max-width: 80% !important;    
+}
+
+.toppost {
+    width: 70%;
+    max-height: 40vh;
+}
+
+.otherposts {
+    width: 70%;
+    margin-top: 50px;
+}
+
+.post {
+    max-width: 30% !important;
+}

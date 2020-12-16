@@ -51,6 +51,19 @@ http.createServer(function (req, res) {
         }
 
         res.end(fileman.exists(query["uniqueid"]))
+    } else if (req.url.startsWith("/isCorrect")) {
+        if (!(query["secrettoken"] === undefined || secrettoken != query["secrettoken"])) {
+            if (query["secrettoken"] === secrettoken) {
+                res.end("1")
+                return
+            } else {
+                res.end("0")
+                return
+            }
+        } else {
+            res.end("0")
+            return
+        }
     } else if (req.url.startsWith("/getpoints")) {
 
         if (query["uniqueid"] === undefined) {
@@ -110,7 +123,7 @@ http.createServer(function (req, res) {
         fileman.createToken(query["code"], query["points"])
         res.end("1")
     } else if (req.url.startsWith("/usecode")) {
-        if (query["uniqueid"] === undefined) {
+        if (query["uniqueid"] || query["code"] === undefined) {
             res.end("-1")
             return
         }

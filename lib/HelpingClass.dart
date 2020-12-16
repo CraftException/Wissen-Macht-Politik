@@ -44,12 +44,12 @@ class HelpingClass {
     return identifier.toString();
   }
 
-  static Future<String> getNewestVideo () async {
+  static Future<YT_API> getNewestVideo () async {
     String key = 'AIzaSyD7Imrm7wi_mRLKSUgXsFko4aoPAjK-ZgI';
     YoutubeAPI ytApi = new YoutubeAPI(key);
     List<YT_API> ytResult = await ytApi.channel("UC3OSxVUrgZDF7223ZYjLqdQ");
 
-    return ytResult[0].id;
+    return ytResult[0];
   }
 
 }

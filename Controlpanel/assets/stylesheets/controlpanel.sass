@@ -1,0 +1,64 @@
+$primary-color: #32ad53
+    
+body 
+    background-color: #d3d3d3
+
+    font-family: Arial, Helvetica, sans-serif
+
+form 
+    border: 3px solid #f1f1f1
+    margin: auto
+    width: 50%
+    vertical-align: middle
+    height: 50%
+    position: relative
+    background-color: white
+    padding-top: 25px
+
+
+input[type=text], input[type=password], input[type=number] 
+    width: 100%
+    padding: 12px 20px
+    margin: 8px 0
+    display: inline-block
+    border: 1px solid #ccc
+    box-sizing: border-box
+
+textarea
+    width: 100%
+    padding: 12px 20px
+    margin: 8px 0
+    display: inline-block
+    border: 1px solid #ccc
+    box-sizing: border-box
+
+button 
+    background-color: $primary-color
+    color: white
+    padding: 14px 20px
+
+    margin: 8px 0
+    border: none
+    cursor: pointer
+    width: 100%
+
+
+button:hover 
+    opacity: 0.8
+
+.container 
+    padding: 16px
+
+
+span.psw 
+    float: right
+    padding-top: 16px
+
+
+@media screen and (max-width: 300px) 
+    span.psw 
+        display: block
+        float: none
+  
+    .cancelbtn 
+        width: 100%

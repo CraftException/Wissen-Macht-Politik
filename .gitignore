@@ -48,6 +48,10 @@ app.*.map.json
 #Compiled JavaScript Files
 *.js
 
+#Compiled CSS files
+/ControlPanel/*.css
+/ControlPanel/*.css.map
+
 #JSON Files in Webserver
 /WebServer/*.json
 

@@ -7,7 +7,7 @@ import 'package:vertretungsplan_mobile/Blog/CovidRequests.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/View/VoteAlert/VoteAlert.dart';
 import 'package:vertretungsplan_mobile/WMP_Channel/requests/VoteRequests.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:youtube_api/youtube_api.dart';
 
 import '../HelpingClass.dart';
 
@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<HomePage> {
 
-  String newestVideoID;
+  YT_API newestVideoID;
   CovidData global,germany;
   Vote newestVote;
   BlogPosts covid,news,denews;
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
   void initState() {
     super.initState();
 
-    newestVideoID = "http://youtube.com/watch?v=unknown";
+    newestVideoID = null;
 
     global = null;
     germany = null;
@@ -75,22 +75,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
 
     homeWidgets.add(_header());
 
-    if (newestVideoID != null) {
-      YoutubePlayerController _controller = YoutubePlayerController(
-        initialVideoId: 'iLnmTe5Q2Qw',
-        flags: YoutubePlayerFlags(
-          autoPlay: true,
-          mute: true,
-        ),
-      );
-
-      homeWidgets.add(YoutubePlayer(
-        controller: _controller,
-        showVideoProgressIndicator: true,
-      ));
-
-      }
-
     if (!(loaded))
       homeWidgets.add(new CircularProgressIndicator());
     else {
@@ -110,6 +94,34 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
 
       if (newestVote != null) 
         homeWidgets.add(_getVoteWidget(newestVote));
+
+      if (newestVideoID != null) {
+        homeWidgets.add(Center(child: Text("Neustes Video:", style: TextStyle(color: Colors.black54, fontSize: 24, height: 2.8),),));
+
+        homeWidgets.add(GestureDetector(
+          child: Center(
+              child: Row(children: [
+                Image.network(newestVideoID.thumbnail.url),
+                Column(children: [
+                  Text(newestVideoID.title, style: TextStyle(fontSize:15)),
+                  ReadMoreText(
+                    newestVideoID.description,
+                    trimLength: 50,
+                    colorClickableText: Colors.blueGrey,
+                    trimMode: TrimMode.Length,
+                    trimCollapsedText: 'Mehr lesen',
+                    trimExpandedText: 'Weniger Lesen',
+                    textAlign: TextAlign.center,
+                    moreStyle: TextStyle(fontSize: 18, height: 1.4),
+                  )
+                ],)
+              ],)
+          ),
+          onTap: () {
+            HelpingClass.launchURL("https://youtube.com/watch?v=" + newestVideoID.id);
+          },
+        ));
+      } 
 
     }
 
