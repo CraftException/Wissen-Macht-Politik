@@ -30,6 +30,8 @@
         <meta name="keywords" content="Politic, Wissen">
 
         <link rel="stylesheet" type="text/css" href="assets/stylesheets/register.css">
+
+        <title>Wissen Macht Politik - Control Panel</title>
     </head>
 
     <body>

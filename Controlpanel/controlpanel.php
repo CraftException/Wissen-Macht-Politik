@@ -2,12 +2,14 @@
 
     include 'Scripts/authorize.php';
     include 'Scripts/tokenmanager.php';
+    include 'Scripts/postmanager.php';
 
     session_start();
     if (!(isset($_SESSION['token']) || isset($_SESSION['serverip']))) {
         header('location:register.php');
         die;
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +24,8 @@
         <meta name="keywords" content="Politic, Wissen">
 
         <link rel="stylesheet" type="text/css" href="assets/stylesheets/controlpanel.css">
+
+        <title>Wissen Macht Politik - Control Panel</title>
     </head>
 
     <body>
@@ -77,6 +81,17 @@
 
                 <button name="addvote" type="submit">Bestätigen</button>
 
+
+                <?php
+
+                    if (isset($_POST["addvote"])) {
+                        createVote($_SESSION['serverip'], $_POST["header"], $_POST["desc"], $_POST["img"], $_POST["type"], $_POST["choices"]);
+                        ?>
+                            <h2>Vote wurde erfolgreich erstellt!</h2>
+                        <?php
+                    }
+
+                ?>
             </div>
         </form>        
         
@@ -97,6 +112,16 @@
 
                 <button name="addinfo" type="submit">Bestätigen</button>
 
+                <?php
+
+                    if (isset($_POST["addinfo"])) {
+                        createInfo($_SESSION['serverip'], $_POST["header"], $_POST["desc"], $_POST["img"]);
+                        ?>
+                            <h2>Info wurde erfolgreich erstellt!</h2>
+                        <?php
+                    }
+
+                ?>
             </div>
         </form>          
 
@@ -128,8 +153,18 @@
                     <option value="germany">Deutschland</option>
                 </select>
 
-                <button name="addinfo" type="submit">Bestätigen</button>
+                <button name="addblog" type="submit">Bestätigen</button>
 
+                <?php
+
+                    if (isset($_POST["addblog"])) {
+                        createInfo($_SESSION['serverip'], $_POST["header"], $_POST["desc"], $_POST["img"], $_POST["author"], $_POST["date"], $_POST["category"]);
+                        ?>
+                            <h2>Blog-Post wurde erfolgreich erstellt!</h2>
+                        <?php
+                    }
+
+                ?>
             </div>
         </form>                        
 
