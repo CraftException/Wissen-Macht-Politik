@@ -95,6 +95,14 @@ http.createServer(function (req, res) {
 
         vote.createVote(xVote)
         res.end("1")
+    } else if (req.url.startsWith("/getvoteinsurvey")) {
+        if (query["secrettoken"] === undefined || secrettoken != query["secrettoken"]) {
+            res.end("-1")
+            return
+        }
+
+        res.end(vote.getVotesInVote(query["header"]))
+        return
     } else if (req.url.startsWith("/hasvoted")) {
         if (query["uniqueid"] === undefined || query["voteheader"] === undefined) {
             res.end("-1")

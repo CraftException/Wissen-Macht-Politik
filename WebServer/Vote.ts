@@ -39,3 +39,17 @@ export function closeVote (header: string) {
     delete parsedVoteContent.votes[header]
     fs.writeFileSync('vote.json', JSON.stringify(parsedVoteContent))
 }
+
+export function getVotesInVote (header) {
+    var votes = []
+
+    Object.keys(parsedVoteContent).forEach(function(key) {
+        if (key !== 'votes') {
+            if (key[header] !== undefined) {
+                votes.push(key[header])
+            }
+        }
+    })
+
+    return votes
+}

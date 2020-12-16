@@ -85,7 +85,17 @@
                 <?php
 
                     if (isset($_POST["addvote"])) {
-                        createVote($_SESSION['serverip'], $_POST["header"], $_POST["desc"], $_POST["img"], $_POST["type"], $_POST["choices"]);
+                        $choices = "[]";
+                        $first = true;
+                        foreach (explode(",",$_POST["choices"]) as $choice) {
+                            if ($first == true) {
+                                $choices = $choices . $choice;
+                            } else {
+                                $choices = $choices . "," . $choice;
+                            }
+                            $first = false;
+                        }
+                        createVote($_SESSION['serverip'], $_POST["header"], $_POST["desc"], $_POST["img"], $_POST["type"], $choices);
                         ?>
                             <h2>Vote wurde erfolgreich erstellt!</h2>
                         <?php
@@ -166,7 +176,20 @@
 
                 ?>
             </div>
-        </form>                        
+        </form>
+        <form action="votes.php" method="get">
+
+            <center><h1>Votes einer Umfrage</h1></center>
+
+            <div class="container">
+
+                <label for="header"><b>Überschrift der Umfrage</b></label><br>
+                <input type="text" name="header" required><br><br>
+
+                <button type="submit">Anzeigen</button>
+
+            </div>
+        </form>
 
     </body>
 

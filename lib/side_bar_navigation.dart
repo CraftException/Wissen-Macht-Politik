@@ -41,6 +41,7 @@ class _AppDrawer extends State<AppDrawer> {
 
     return MaterialApp(
       color: Colors.blue,
+      title: 'Wissen Macht Politik',
       home: Scaffold(
         key: AppDrawer.scaffoldKey,
         body: content,
